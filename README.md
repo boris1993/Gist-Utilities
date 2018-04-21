@@ -14,7 +14,7 @@ pip3 install -r requirements.txt
 
 # Contents
 
-+ create_gist.py - Create a GitHub Gist from a bunch of local files.
++ [create_gist.py](create_gist.py) - Create a GitHub Gist from a bunch of local files.
 
 # License
 This project is licensed under the [MIT](LICENSE) License.
