@@ -13,20 +13,10 @@ import argparse
 import requests
 import json
 
-__API_URL = "https://api.github.com"
+import global_config
+import common_utils
+
 __arg_parser = argparse.ArgumentParser()
-
-
-def __read_content(path):
-    """
-    Read the content of the file
-
-    :param path: Path to the file
-    :return: Content of the file
-    :rtype: str
-    """
-    with open(path, "r") as f:
-        return f.read()
 
 
 def create_gist(files, is_private, token):
@@ -56,7 +46,7 @@ def create_gist(files, is_private, token):
 
         try:
             file_info = {
-                "content": __read_content(path)
+                "content": common_utils.read_content(path)
             }
             data["files"][file.split("/")[-1]] = file_info
         except IOError:
@@ -68,7 +58,7 @@ def create_gist(files, is_private, token):
         return
 
     print("[INFO] Creating Gist...")
-    resp = requests.post(__API_URL + "/gists", headers=headers, data=json.dumps(data), timeout=5)
+    resp = requests.post(global_config.API_URL + "/gists", headers=headers, data=json.dumps(data), timeout=5)
 
     # 201 Created
     if resp.status_code == 201:
