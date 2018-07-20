@@ -7,6 +7,7 @@ A module for creating GitHub Gist from local files.
 Example:
     $ python3 create_gist.py -t <YOUR_GIST_ACCESS_TOKEN> -f <PATH_TO_THE_FILE>
 """
+import global_config
 
 __author__ = "Boris Zhao"
 
@@ -20,9 +21,6 @@ import json
 from utils import common_utils
 
 __arg_parser = argparse.ArgumentParser()
-
-CONFIG = common_utils.read_config()
-API_URL = CONFIG["GitHub"]["API_URL"]
 
 
 def create_gist(files, is_private, token):
@@ -64,7 +62,7 @@ def create_gist(files, is_private, token):
 
     print("[INFO] Creating Gist...")
     try:
-        resp = requests.post(API_URL + "/gists", headers=headers, data=json.dumps(data), timeout=5)
+        resp = requests.post(global_config.API_URL + "/gists", headers=headers, data=json.dumps(data), timeout=5)
     except requests.exceptions.Timeout:
         print("[ERROR] Request timeout. Please try again later. ")
         sys.exit(-1)

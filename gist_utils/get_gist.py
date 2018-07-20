@@ -15,12 +15,7 @@ import readline
 
 import global_config
 
-from utils import common_utils
-
 __arg_parser = argparse.ArgumentParser()
-
-CONFIG = common_utils.read_config()
-API_URL = CONFIG["GitHub"]["API_URL"]
 
 
 def get_gist(gist_id):
