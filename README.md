@@ -14,11 +14,11 @@ pip3 install -r requirements.txt
 
 # Contents
 
-+ [common_utils.py](src/common_utils.py) - Common utilities.
-+ [global_config.py](src/global_config.py) - Global configurations.
-+ [create_gist.py](src/create_gist.py) - Create a GitHub Gist from a bunch of local files.
-+ [get_gist.py](src/get_gist.py) - Get information of specified Gist.
-+ [update_gist.py](src/update_gist.py) - Update specified Gist.
++ [common_utils.py](gist_utils/utils/common_utils.py) - Common utilities.
++ [global_config.py](gist_utils/global_config.py) - Global configurations.
++ [create_gist.py](gist_utils/create_gist.py) - Create a GitHub Gist from a bunch of local files.
++ [get_gist.py](gist_utils/get_gist.py) - Get information of specified Gist.
++ [update_gist.py](gist_utils/update_gist.py) - Update specified Gist.
 
 # License
 This project is licensed under the [MIT](LICENSE) License.
