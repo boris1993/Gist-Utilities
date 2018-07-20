@@ -2,31 +2,36 @@
 # -*- coding: utf-8 -*-
 
 """
-A module for creating GitHub Gist from local files
+A module for creating GitHub Gist from local files.
+
+Example:
+    $ python3 create_gist.py -t <YOUR_GIST_ACCESS_TOKEN> -f <PATH_TO_THE_FILE>
 """
 
 __author__ = "Boris Zhao"
 
 import os
 import sys
+import readline
 import argparse
 import requests
 import json
 
-import global_config
-import common_utils
+from utils import common_utils
 
 __arg_parser = argparse.ArgumentParser()
 
+CONFIG = common_utils.read_config()
+API_URL = CONFIG["GitHub"]["API_URL"]
+
 
 def create_gist(files, is_private, token):
-    """
-    Create the Gist
+    """Create the Gist.
 
     :param files: A list of files to be added to the Gist
     :param is_private: Is this a private Gist?
     :param token: Your GitHub access token
-    :return:
+    :return
     """
     description = input("(Optional) Description: ")
 
@@ -58,7 +63,11 @@ def create_gist(files, is_private, token):
         return
 
     print("[INFO] Creating Gist...")
-    resp = requests.post(global_config.API_URL + "/gists", headers=headers, data=json.dumps(data), timeout=5)
+    try:
+        resp = requests.post(API_URL + "/gists", headers=headers, data=json.dumps(data), timeout=5)
+    except requests.exceptions.Timeout:
+        print("[ERROR] Request timeout. Please try again later. ")
+        sys.exit(-1)
 
     # 201 Created
     if resp.status_code == 201:
@@ -74,6 +83,7 @@ def create_gist(files, is_private, token):
 def __main():
     __init_arg_parser()
 
+    # sys.argv[0] is the script name which always exists
     if len(sys.argv) == 1:
         __arg_parser.print_help()
         sys.exit(0)
@@ -94,7 +104,7 @@ def __init_arg_parser():
 
     __arg_parser.add_argument("-f", "--file",
                               help="A list of file going to be uploaded to your Gist. "
-                              "Either absolute path or relative path are accepted. ",
+                                   "Either absolute path or relative path are accepted. ",
                               nargs="+",
                               required=True)
 
@@ -106,4 +116,7 @@ def __init_arg_parser():
 
 
 if __name__ == '__main__':
-    __main()
+    try:
+        __main()
+    except KeyboardInterrupt:
+        print("\n[INFO] User cancelled. ")

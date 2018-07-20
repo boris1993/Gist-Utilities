@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import update_gist
+from utils import update_gist
 import unittest
 
 

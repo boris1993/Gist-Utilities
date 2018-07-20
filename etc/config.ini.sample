@@ -1,0 +1,5 @@
+[GitHub]
+API_URL = https://api.github.com
+
+[User]
+TOKEN = <YOUR_TOKEN_HERE>
